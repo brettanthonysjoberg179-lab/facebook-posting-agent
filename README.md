@@ -1,12 +1,13 @@
-# Facebook Posting Agent
+# Facebook Posting Agent & Media Generator
 
-Production-ready autonomous AI agent for publishing growth updates and marketing posts securely to a Facebook Page via Meta Graph API.
+Production-ready autonomous AI agent for publishing growth updates, marketing posts, generated graphics, and videos securely to a Facebook Page via Meta Graph API and Meta MCP Server workflows.
 
 ## Features
-- **Secure Meta Graph API Integration:** Uses Page Access Tokens (`METAGRAPH_API_KEY`) and Page IDs (`META_PAGE_ID`).
-- **File & String Inputs:** Load post content directly from markdown files or CLI arguments.
-- **Dry-Run & Live Modes:** Safely test and validate posts locally before publishing live.
-- **Structured Audit Logging:** Automatically generates JSON audit reports of every posting execution.
+- **Dynamic Media Generation:** Automatically generates professional 1200x630 social media graphics with custom titles, subtitles, and branding using Pillow (`--generate-image`).
+- **Meta Graph API Integration:** Supports both text feeds (`/feed`) and photo attachments (`/photos`) using Page Access Tokens (`METAGRAPH_API_KEY`).
+- **Meta MCP Server Compatibility:** Designed to integrate seamlessly with Meta Social Technologies & WhatsApp Business Remote MCP servers.
+- **Dry-Run & Live Modes:** Safely test posts and media locally before publishing live.
+- **Structured Audit Logging:** Automatically generates JSON audit reports (`logs/facebook_agent_report.json`).
 
 ## Setup & Configuration
 
@@ -14,7 +15,7 @@ Production-ready autonomous AI agent for publishing growth updates and marketing
    ```bash
    cp .env.example .env
    ```
-2. Configure your Meta credentials in `.env`:
+2. Configure credentials in `.env`:
    ```env
    METAGRAPH_API_KEY=your_page_access_token_here
    META_PAGE_ID=your_facebook_page_id_here
@@ -26,17 +27,12 @@ Production-ready autonomous AI agent for publishing growth updates and marketing
 
 ## Usage
 
-Run in dry-run mode (default):
+Run dry-run mode with generated social image:
 ```bash
-python facebook_posting_agent.py --dry-run
+python facebook_posting_agent.py --dry-run --generate-image
 ```
 
-Post from a markdown file:
+Post from a markdown file with generated graphic:
 ```bash
-python facebook_posting_agent.py --file post.md --dry-run
-```
-
-Publish live to Facebook:
-```bash
-python facebook_posting_agent.py --live
+python facebook_posting_agent.py --file post.md --generate-image --live
 ```
