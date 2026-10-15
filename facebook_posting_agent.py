@@ -22,12 +22,19 @@ LOG_DIR = Path("logs")
 LOG_DIR.mkdir(exist_ok=True)
 
 def load_env():
-    env_path = Path(".env")
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            if "=" in line and not line.startswith("#"):
-                k, v = line.split("=", 1)
-                os.environ[k.strip()] = v.strip().strip("'\"")
+    candidates = [
+        Path(".env"),
+        Path.home() / ".env",
+        Path.home() / "cloudflare.env",
+        Path(__file__).resolve().parent.parent.parent / ".env"
+    ]
+    for env_path in candidates:
+        if env_path.exists():
+            for line in env_path.read_text().splitlines():
+                if "=" in line and not line.startswith("#"):
+                    k, v = line.split("=", 1)
+                    if k.strip() not in os.environ:
+                        os.environ[k.strip()] = v.strip().strip("'\"")
 
 load_env()
 
